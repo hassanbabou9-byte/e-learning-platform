@@ -10,7 +10,9 @@ import com.elearning.enrollmentservice.exception.ResourceNotFoundException;
 import com.elearning.enrollmentservice.repository.EnrollmentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import com.elearning.enrollmentservice.dto.MyCourseResponseDto;
 
+import java.util.List;
 import java.time.LocalDateTime;
 
 @Service
@@ -116,4 +118,70 @@ public class EnrollmentService {
 
         return savedEnrollment;
     }
+    public List<MyCourseResponseDto>
+getStudentCourses(Long studentId) {
+
+    return enrollmentRepository
+            .findByStudentId(studentId)
+
+            .stream()
+
+            .map(enrollment -> {
+
+                CourseDto course =
+                        courseClient.getCourseById(
+                                enrollment.getCourseId()
+                        );
+
+                return MyCourseResponseDto
+                        .builder()
+
+                        .enrollmentId(
+                                enrollment.getId()
+                        )
+
+                        .courseId(
+                                course.getId()
+                        )
+
+                        .title(
+                                course.getTitle()
+                        )
+
+                        .description(
+                                course.getDescription()
+                        )
+
+                        .instructor(
+                                course.getInstructor()
+                        )
+
+                        .build();
+
+            })
+
+            .toList();
 }
+
+    public void cancelEnrollment(
+            Long enrollmentId
+    ) {
+
+        Enrollment enrollment =
+                enrollmentRepository
+                        .findById(enrollmentId)
+
+                        .orElseThrow(() ->
+                                new ResourceNotFoundException(
+                                        "Enrollment not found"
+                                )
+                        );
+
+        courseClient.decrementEnrollment(
+                enrollment.getCourseId()
+        );
+
+        enrollmentRepository.delete(
+                enrollment
+        );
+    }}

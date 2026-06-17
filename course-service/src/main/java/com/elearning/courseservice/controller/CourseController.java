@@ -29,7 +29,13 @@ public class CourseController {
 
         return courseService.getAllCourses();
     }
+    @PutMapping("/{id}/decrement")
+    public void decrementEnrollment(
+            @PathVariable Long id
+    ) {
 
+        courseService.decrementEnrollment(id);
+    }
     @GetMapping("/recent")
     public List<CourseResponseDto> getRecentCourses() {
 

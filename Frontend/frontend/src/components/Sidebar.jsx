@@ -78,6 +78,13 @@ function Sidebar() {
                         <BookOpen size={22}/>
                         Courses
                     </Link>
+                    <Link
+    to="/my-courses"
+    className={menuClass("/my-courses")}
+>
+    <BookOpen size={22}/>
+    My Courses
+</Link>
 
                 </div>
 

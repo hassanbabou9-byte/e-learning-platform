@@ -3,7 +3,17 @@ package com.elearning.enrollmentservice.repository;
 import com.elearning.enrollmentservice.entity.Enrollment;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface EnrollmentRepository extends JpaRepository<Enrollment, Long> {
+import java.util.List;
 
-    boolean existsByStudentIdAndCourseId(Long studentId, Long courseId);
+public interface EnrollmentRepository
+        extends JpaRepository<Enrollment, Long> {
+
+    boolean existsByStudentIdAndCourseId(
+            Long studentId,
+            Long courseId
+    );
+
+    List<Enrollment> findByStudentId(
+            Long studentId
+    );
 }

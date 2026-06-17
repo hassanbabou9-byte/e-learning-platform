@@ -15,3 +15,21 @@ export const enrollStudent = async (
 
     return response.data;
 };
+export const getStudentCourses =
+    async (studentId) => {
+
+        const response =
+            await API.get(
+                `/api/enrollments/student/${studentId}`
+            );
+
+        return response.data;
+    };
+
+export const cancelEnrollment =
+    async (id) => {
+
+        await API.delete(
+            `/api/enrollments/${id}`
+        );
+    };

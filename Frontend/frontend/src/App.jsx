@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
+import MyCoursesPage
+from "./pages/MyCoursesPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import DashboardPage from "./pages/DashboardPage";
@@ -42,6 +43,14 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route
+    path="/my-courses"
+    element={
+        <ProtectedRoute>
+            <MyCoursesPage />
+        </ProtectedRoute>
+    }
+/>
 
       </Routes>
 

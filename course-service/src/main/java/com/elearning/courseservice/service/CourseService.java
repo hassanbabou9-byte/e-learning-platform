@@ -53,7 +53,28 @@ public class CourseService {
                 .map(this::mapToResponse)
                 .toList();
     }
+    public void decrementEnrollment(
+            Long courseId
+    ) {
 
+        Course course =
+                courseRepository.findById(courseId)
+
+                        .orElseThrow(() ->
+                                new ResourceNotFoundException(
+                                        "Course not found"
+                                )
+                        );
+
+        if(course.getCurrentEnrollments() > 0) {
+
+            course.setCurrentEnrollments(
+                    course.getCurrentEnrollments() - 1
+            );
+
+            courseRepository.save(course);
+        }
+    }
     public CourseResponseDto getCourseById(Long id) {
 
         Course course = courseRepository.findById(id)

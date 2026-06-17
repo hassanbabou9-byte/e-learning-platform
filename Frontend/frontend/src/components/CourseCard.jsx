@@ -3,7 +3,8 @@ import { Users } from "lucide-react";
 function CourseCard({
     course,
     onEnroll,
-    enrollingId
+    enrollingId,
+    isEnrolled
 }) {
 
     const isLoading =
@@ -93,12 +94,18 @@ function CourseCard({
     }
 </p>
             <button
-    disabled={isLoading || isFull}
+    disabled={
+        isLoading ||
+        isFull ||
+        isEnrolled
+    }
     onClick={() => onEnroll(course.id)}
     className="w-full bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 p-3 rounded-xl font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed"
 >
     {
-        isFull
+        isEnrolled
+            ? "Already Enrolled"
+            : isFull
             ? "Course Full"
             : isLoading
             ? "Enrolling..."

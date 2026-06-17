@@ -8,11 +8,16 @@ import CreateCourseModal from "../components/CreateCourseModal";
 import { useAuth } from "../context/AuthContext";
 
 import { getAllCourses } from "../services/courseService";
-import { enrollStudent } from "../services/enrollmentService";
+import {
+    enrollStudent,
+    getStudentCourses
+} from "../services/enrollmentService";
 
 function CoursesPage() {
 
     const [courses, setCourses] = useState([]);
+    const [myCourses, setMyCourses] =
+    useState([]);
     const [search, setSearch] = useState("");
     const [loadingCourses, setLoadingCourses] = useState(true);
     const [enrollingId, setEnrollingId] = useState(null);
@@ -38,7 +43,16 @@ function CoursesPage() {
 
             const data = await getAllCourses();
 
-            setCourses(data);
+const enrolledCourses =
+    await getStudentCourses(
+        auth.user.studentId
+    );
+
+setCourses(data);
+
+setMyCourses(
+    enrolledCourses
+);
 
         } catch (error) {
 
@@ -224,11 +238,16 @@ function CoursesPage() {
                                 filteredCourses.map(course => (
 
                                     <CourseCard
-                                        key={course.id}
-                                        course={course}
-                                        onEnroll={handleEnroll}
-                                        enrollingId={enrollingId}
-                                    />
+    key={course.id}
+    course={course}
+    onEnroll={handleEnroll}
+    enrollingId={enrollingId}
+    isEnrolled={
+        myCourses.some(
+            c => c.courseId === course.id
+        )
+    }
+/>
 
                                 ))
                             }

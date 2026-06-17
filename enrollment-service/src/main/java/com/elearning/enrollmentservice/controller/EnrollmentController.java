@@ -7,7 +7,9 @@ import com.elearning.enrollmentservice.service.EnrollmentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import com.elearning.enrollmentservice.dto.MyCourseResponseDto;
 
+import java.util.List;
 @RestController
 @RequestMapping("/api/enrollments")
 @RequiredArgsConstructor
@@ -18,7 +20,26 @@ public class EnrollmentController {
 
     private final EnrollmentRepository
             enrollmentRepository;
+    @GetMapping("/student/{studentId}")
+    public List<MyCourseResponseDto>
+    getStudentCourses(
+            @PathVariable Long studentId
+    ) {
 
+        return enrollmentService
+                .getStudentCourses(
+                        studentId
+                );
+    }
+
+    @DeleteMapping("/{id}")
+    public void cancelEnrollment(
+            @PathVariable Long id
+    ) {
+
+        enrollmentService
+                .cancelEnrollment(id);
+    }
     @PostMapping
     public Enrollment enrollStudent(
             @Valid @RequestBody EnrollmentRequestDto request

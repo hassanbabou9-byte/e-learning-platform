@@ -8,8 +8,17 @@ import org.springframework.web.bind.annotation.*;
 public interface CourseClient {
 
     @GetMapping("/api/courses/{id}")
-    CourseDto getCourseById(@PathVariable Long id);
+    CourseDto getCourseById(
+            @PathVariable Long id
+    );
 
     @PutMapping("/api/courses/{id}/increment")
-    void incrementEnrollment(@PathVariable Long id);
+    void incrementEnrollment(
+            @PathVariable Long id
+    );
+
+    @PutMapping("/api/courses/{id}/decrement")
+    void decrementEnrollment(
+            @PathVariable Long id
+    );
 }
