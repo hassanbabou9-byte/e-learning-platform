@@ -8,7 +8,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/student_db
     username: postgres
-    password: neo123
+    password: change_me
 
   jpa:
     hibernate:
